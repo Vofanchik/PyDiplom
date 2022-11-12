@@ -29,8 +29,10 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
-    email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField('Эл. почта', max_length=254, unique=True)
     patronymic = models.TextField(max_length=20, blank=True)
+    company = models.TextField(max_length=20, blank=True)
+    position = models.TextField(max_length=20, blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
