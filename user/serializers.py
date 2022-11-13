@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
+from store.serializers import ContactSerializer
 from user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    contacts = ContactSerializer(read_only=True, many=True)
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'patronymic', 'company', 'position']
+        fields = ['email', 'type', 'first_name', 'last_name', 'patronymic', 'company', 'position', 'contacts']
 
 
 class UserRegistrSerializer(serializers.ModelSerializer):
@@ -15,7 +17,7 @@ class UserRegistrSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'patronymic', 'company', 'position', 'password', 'password2']
+        fields = ['email', 'type', 'first_name', 'last_name', 'patronymic', 'company', 'position', 'password', 'password2']
 
 
     def save(self, *args, **kwargs):
@@ -26,6 +28,7 @@ class UserRegistrSerializer(serializers.ModelSerializer):
             last_name=self.validated_data['last_name'],
             company=self.validated_data['company'],
             position=self.validated_data['position'],
+            type=self.validated_data['type'],
         )
         password = self.validated_data['password']
         password2 = self.validated_data['password2']

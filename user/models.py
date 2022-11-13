@@ -3,6 +3,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
+USER_TYPE_CHOICES = (
+    ('shop', 'Магазин'),
+    ('buyer', 'Покупатель'),
+)
 
 class CustomUserManager(BaseUserManager):
 
@@ -30,9 +34,12 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField('Эл. почта', max_length=254, unique=True)
-    patronymic = models.TextField(max_length=20, blank=True)
-    company = models.TextField(max_length=20, blank=True)
-    position = models.TextField(max_length=20, blank=True)
+    last_name = models.TextField('Фамилия', max_length=20, blank=True)
+    first_name = models.TextField('Имя', max_length=20, blank=True)
+    patronymic = models.TextField('Отчество', max_length=20, blank=True)
+    company = models.TextField('Компания', max_length=20, blank=True)
+    position = models.TextField('Должность', max_length=20, blank=True)
+    type = models.CharField('Тип пользователя', choices=USER_TYPE_CHOICES, max_length=5, default='buyer')
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
