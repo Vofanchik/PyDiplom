@@ -6,7 +6,7 @@ from store.models import Category, Shop, Product, ProductParameter, ProductInfo,
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ('id', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'user', 'phone')
+        fields = ('id', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'phone')
         read_only_fields = ('id',)
         extra_kwargs = {
             'user': {'write_only': True}
