@@ -134,16 +134,15 @@ class BasketView(APIView):
         if items_sting:
             try:
                 items_dict = load_json(items_sting)
-                print(items_dict)
+
             except ValueError:
                 JsonResponse({'Status': False, 'Errors': 'Неверный формат запроса'})
             else:
+
                 basket, _ = Order.objects.get_or_create(user_id=request.user.id, state='basket')
                 objects_created = 0
                 for order_item in items_dict:
-                    print(order_item)
                     order_item.update({'order': basket.id})
-                    print(order_item)
                     serializer = OrderItemSerializer(data=order_item)
                     print(serializer.is_valid())
                     if serializer.is_valid():
